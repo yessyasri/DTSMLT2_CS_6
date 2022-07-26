@@ -1,0 +1,863 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "9b32564d-46d2-428c-a92a-25921cfdfaaf",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Collecting vaderSentiment\n",
+      "  Downloading vaderSentiment-3.3.2-py2.py3-none-any.whl (125 kB)\n",
+      "Requirement already satisfied: requests in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from vaderSentiment) (2.27.1)\n",
+      "Requirement already satisfied: charset-normalizer~=2.0.0 in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from requests->vaderSentiment) (2.0.4)\n",
+      "Requirement already satisfied: urllib3<1.27,>=1.21.1 in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from requests->vaderSentiment) (1.26.7)\n",
+      "Requirement already satisfied: idna<4,>=2.5 in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from requests->vaderSentiment) (3.2)\n",
+      "Requirement already satisfied: certifi>=2017.4.17 in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from requests->vaderSentiment) (2021.10.8)\n",
+      "Installing collected packages: vaderSentiment\n",
+      "Successfully installed vaderSentiment-3.3.2\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "#install package \n",
+    "pip install vaderSentiment"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "defae990-d706-4135-b47b-0934c569ef0f",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Requirement already satisfied: nltk in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (3.6.5)\n",
+      "Requirement already satisfied: click in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from nltk) (8.0.3)\n",
+      "Requirement already satisfied: joblib in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from nltk) (1.1.0)\n",
+      "Requirement already satisfied: regex>=2021.8.3 in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from nltk) (2021.8.3)\n",
+      "Requirement already satisfied: tqdm in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from nltk) (4.62.3)\n",
+      "Requirement already satisfied: colorama in c:\\users\\imba pc\\anaconda3\\lib\\site-packages (from click->nltk) (0.4.4)\n",
+      "Note: you may need to restart the kernel to use updated packages.\n"
+     ]
+    }
+   ],
+   "source": [
+    "pip install nltk"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "78dbc9a0-947d-43c5-9e70-b6e900b22829",
+   "metadata": {},
+   "outputs": [
+    {
+     "name": "stderr",
+     "output_type": "stream",
+     "text": [
+      "[nltk_data] Downloading package vader_lexicon to C:\\Users\\IMBA\n",
+      "[nltk_data]     PC\\AppData\\Roaming\\nltk_data...\n",
+      "[nltk_data]   Package vader_lexicon is already up-to-date!\n"
+     ]
+    }
+   ],
+   "source": [
+    "#modeling\n",
+    "import nltk\n",
+    "nltk.download('vader_lexicon')\n",
+    "from nltk.sentiment.vader import SentimentIntensityAnalyzer\n",
+    "sid = SentimentIntensityAnalyzer()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "id": "d6c83ea4-4d31-495a-bcbb-105e28f573a9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "{'neg': 0.0, 'neu': 0.508, 'pos': 0.492, 'compound': 0.4404}"
+      ]
+     },
+     "execution_count": 13,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "a = 'This was a good movie.'\n",
+    "sid.polarity_scores(a)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "id": "0afe831a-97ca-4a55-9b41-82a858a22916",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>data teks</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>115712 understand would like assist would need...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>sprintcare propose</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>sprintcare sent several private message one re...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>3</td>\n",
+       "      <td>115712 please send private message assist clic...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>4</td>\n",
+       "      <td>sprintcare</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0                                          data teks\n",
+       "0           0  115712 understand would like assist would need...\n",
+       "1           1                                 sprintcare propose\n",
+       "2           2  sprintcare sent several private message one re...\n",
+       "3           3  115712 please send private message assist clic...\n",
+       "4           4                                         sprintcare"
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "import numpy as np\n",
+    "import pandas as pd\n",
+    "\n",
+    "df = pd.read_csv('data_cs_clean.csv')\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "id": "1f44dc58-3cfa-4389-b193-8c27844757e9",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Unnamed: 0</th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>0</td>\n",
+       "      <td>115712 understand would like assist would need...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>1</td>\n",
+       "      <td>sprintcare propose</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>2</td>\n",
+       "      <td>sprintcare sent several private message one re...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>3</td>\n",
+       "      <td>115712 please send private message assist clic...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>4</td>\n",
+       "      <td>sprintcare</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "   Unnamed: 0                                               text\n",
+       "0           0  115712 understand would like assist would need...\n",
+       "1           1                                 sprintcare propose\n",
+       "2           2  sprintcare sent several private message one re...\n",
+       "3           3  115712 please send private message assist clic...\n",
+       "4           4                                         sprintcare"
+      ]
+     },
+     "execution_count": 15,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df.rename(columns = {'data teks':'text'}, inplace = True)\n",
+    "df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "id": "411cc41a-df4f-49f4-b272-ebaf518c1d31",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>text</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>115712 understand would like assist would need...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>sprintcare propose</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>sprintcare sent several private message one re...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>115712 please send private message assist clic...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>sprintcare</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                                text\n",
+       "0  115712 understand would like assist would need...\n",
+       "1                                 sprintcare propose\n",
+       "2  sprintcare sent several private message one re...\n",
+       "3  115712 please send private message assist clic...\n",
+       "4                                         sprintcare"
+      ]
+     },
+     "execution_count": 16,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_df = df[['text']]\n",
+    "my_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 29,
+   "id": "bde97a7f-a935-40b6-a710-26506190ac34",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>text</th>\n",
+       "      <th>scores</th>\n",
+       "      <th>compound</th>\n",
+       "      <th>comp_score</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>understand would like assist would need get pr...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...</td>\n",
+       "      <td>0.6369</td>\n",
+       "      <td>positive</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>sprintcare propose</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>sprintcare sent several private message one re...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>please send private message assist click messa...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...</td>\n",
+       "      <td>0.4767</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>sprintcare</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                                text  \\\n",
+       "0  understand would like assist would need get pr...   \n",
+       "1                                 sprintcare propose   \n",
+       "2  sprintcare sent several private message one re...   \n",
+       "3  please send private message assist click messa...   \n",
+       "4                                         sprintcare   \n",
+       "\n",
+       "                                              scores  compound comp_score  \n",
+       "0  {'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...    0.6369   positive  \n",
+       "1  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000    neutral  \n",
+       "2  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000    neutral  \n",
+       "3  {'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...    0.4767    neutral  \n",
+       "4  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000    neutral  "
+      ]
+     },
+     "execution_count": 29,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "#remove number and punctuation\n",
+    "import re\n",
+    "\n",
+    "def preprocess(CleanText):\n",
+    "    CleanText = re.sub(r'^\\s*|\\s\\s*', ' ', str(CleanText))\n",
+    "    CleanText = re.sub(r'[^a-zA-Z]', ' ', str(CleanText)).strip()\n",
+    "    \n",
+    "    \n",
+    "    return CleanText\n",
+    "my_df['text']= my_df['text'].apply(preprocess) \n",
+    "\n",
+    "my_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 21,
+   "id": "7756bc2d-c249-4a48-85f4-5e19a1787e80",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>text</th>\n",
+       "      <th>scores</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>understand would like assist would need...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>sprintcare propose</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>sprintcare sent several private message one re...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>please send private message assist clic...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>sprintcare</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                                text  \\\n",
+       "0         understand would like assist would need...   \n",
+       "1                                 sprintcare propose   \n",
+       "2  sprintcare sent several private message one re...   \n",
+       "3         please send private message assist clic...   \n",
+       "4                                         sprintcare   \n",
+       "\n",
+       "                                              scores  \n",
+       "0  {'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...  \n",
+       "1  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...  \n",
+       "2  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...  \n",
+       "3  {'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...  \n",
+       "4  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...  "
+      ]
+     },
+     "execution_count": 21,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_df['scores'] = my_df['text'].apply(lambda text: sid.polarity_scores(str(text)))\n",
+    "\n",
+    "my_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 22,
+   "id": "96e3da55-1261-43d7-bdf7-fe391c8213f6",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>text</th>\n",
+       "      <th>scores</th>\n",
+       "      <th>compound</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>understand would like assist would need...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...</td>\n",
+       "      <td>0.6369</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>sprintcare propose</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>sprintcare sent several private message one re...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>please send private message assist clic...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...</td>\n",
+       "      <td>0.4767</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>sprintcare</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                                text  \\\n",
+       "0         understand would like assist would need...   \n",
+       "1                                 sprintcare propose   \n",
+       "2  sprintcare sent several private message one re...   \n",
+       "3         please send private message assist clic...   \n",
+       "4                                         sprintcare   \n",
+       "\n",
+       "                                              scores  compound  \n",
+       "0  {'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...    0.6369  \n",
+       "1  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000  \n",
+       "2  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000  \n",
+       "3  {'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...    0.4767  \n",
+       "4  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000  "
+      ]
+     },
+     "execution_count": 22,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_df['compound']  = my_df['scores'].apply(lambda score_dict: score_dict['compound'])\n",
+    "\n",
+    "my_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 23,
+   "id": "cb181830-d435-45e8-8d6d-5d5607a30be3",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>text</th>\n",
+       "      <th>scores</th>\n",
+       "      <th>compound</th>\n",
+       "      <th>comp_score</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>understand would like assist would need...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...</td>\n",
+       "      <td>0.6369</td>\n",
+       "      <td>positive</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>sprintcare propose</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>sprintcare sent several private message one re...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>please send private message assist clic...</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...</td>\n",
+       "      <td>0.4767</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>sprintcare</td>\n",
+       "      <td>{'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...</td>\n",
+       "      <td>0.0000</td>\n",
+       "      <td>neutral</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "                                                text  \\\n",
+       "0         understand would like assist would need...   \n",
+       "1                                 sprintcare propose   \n",
+       "2  sprintcare sent several private message one re...   \n",
+       "3         please send private message assist clic...   \n",
+       "4                                         sprintcare   \n",
+       "\n",
+       "                                              scores  compound comp_score  \n",
+       "0  {'neg': 0.0, 'neu': 0.634, 'pos': 0.366, 'comp...    0.6369   positive  \n",
+       "1  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000    neutral  \n",
+       "2  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000    neutral  \n",
+       "3  {'neg': 0.0, 'neu': 0.631, 'pos': 0.369, 'comp...    0.4767    neutral  \n",
+       "4  {'neg': 0.0, 'neu': 1.0, 'pos': 0.0, 'compound...    0.0000    neutral  "
+      ]
+     },
+     "execution_count": 23,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_df['comp_score'] = my_df['compound'].apply(lambda c: 'positive' if c >=0.5 else ('negative' if c<=-0.5 else 'neutral'))\n",
+    "\n",
+    "my_df.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 24,
+   "id": "20afd60f-86a5-4617-aa23-f519eff711d8",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "neutral     1895475\n",
+       "positive     742097\n",
+       "negative     174202\n",
+       "Name: comp_score, dtype: int64"
+      ]
+     },
+     "execution_count": 24,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_df['comp_score'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 25,
+   "id": "ed9eb06a-3df6-4d97-9cb0-dd4246799f8d",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np \n",
+    "import pandas as pd \n",
+    "import re\n",
+    "import nltk \n",
+    "import matplotlib.pyplot as plt\n",
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 26,
+   "id": "57bb7cbc-a0cd-460a-8f75-e2dff9c5a16a",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "<AxesSubplot:ylabel='comp_score'>"
+      ]
+     },
+     "execution_count": 26,
+     "metadata": {},
+     "output_type": "execute_result"
+    },
+    {
+     "data": {
+      "image/png": "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\n",
+      "text/plain": [
+       "<Figure size 432x288 with 1 Axes>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "my_df['comp_score'].value_counts().plot(kind='pie', autopct='%1.0f%%', colors=[\"green\", \"yellow\", \"red\"])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 27,
+   "id": "1c145ded-f8b4-42e8-97ca-bf32588cf62e",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "my_df.to_csv(\"vader_label.csv\", index = False)  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 28,
+   "id": "a8bdec7e-bf63-48c4-accc-a611c9e616ec",
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "neutral     1895475\n",
+       "positive     742097\n",
+       "negative     174202\n",
+       "Name: comp_score, dtype: int64"
+      ]
+     },
+     "execution_count": 28,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "my_df['comp_score'].value_counts()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4aa4f7e0-1c15-452b-b454-6c29c7778456",
+   "metadata": {},
+   "outputs": [],
+   "source": []
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.7"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
